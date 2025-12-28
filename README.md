@@ -8,7 +8,7 @@ The simulations are organized by subject:
 
 *   **CL**
 *   **ICT**
-*   **FOthers**
+*   **Others**
 
 
 ## Usage
