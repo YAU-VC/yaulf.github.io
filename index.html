@@ -10,7 +10,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #000033;
+      background-color: #0f172a;
       /* Slate 900 */
       color: #f8fafc;
       /* Slate 50 */
@@ -76,7 +76,19 @@
   <!-- Particle Background -->
   <canvas id="particles"></canvas>
 
-
+  <!-- Language Selector -->
+  <div class="absolute top-4 right-4 z-50">
+    <div class="flex bg-slate-800/80 backdrop-blur-sm rounded-full p-1 border border-slate-700 shadow-lg">
+      <button onclick="setLanguage('en-US')" id="btn-en"
+        class="px-3 py-1 text-xs font-bold rounded-full transition-all duration-300 text-slate-400 hover:text-white">
+        EN
+      </button>
+      <button onclick="setLanguage('zh-HK')" id="btn-zh"
+        class="px-3 py-1 text-xs font-bold rounded-full transition-all duration-300 text-slate-400 hover:text-white">
+        繁
+      </button>
+    </div>
+  </div>
 
   <!-- Hero Section -->
   <header class="pt-20 pb-12 px-4 text-center relative z-10">
@@ -85,6 +97,7 @@
       data-i18n="siteTitle">
       Valtorta College
     </h1>
+
 
     <!-- Search Bar -->
     <div class="max-w-md mx-auto relative group">
@@ -110,10 +123,9 @@
   </main>
 
 
-
   <script>
     // --- Configuration ---
-    const DATA_URL = 'data/simulation.json';
+    const DATA_URL = 'data/simulations.json';
 
     // Category Order (as requested)
     const CATEGORY_ORDER = [
@@ -122,11 +134,10 @@
           "Others": "Others"
     ];
 
-    // i18n Configuration
     const i18n = {
       'en-US': {
         siteTitle: "Valtorta College",
-	</p>
+	<p> </p>
         siteTagline: "Interactive simulations for exploring the IT world.",
         searchPlaceholder: "Search simulations...",
         categories: {
@@ -135,6 +146,17 @@
           "Others": "Others"
         },
         contributors: "Contributors"
+      },
+      'zh-HK': {
+        siteTitle: "模擬實驗室",
+        siteTagline: "互動模擬體驗。",
+        searchPlaceholder: "搜尋模擬實驗...",
+        categories: {
+          "ICT": "資訊及通訊科技",
+          "CL": "初中 資訊和通訊科技",
+          "Others": "其他",
+        },
+        contributors: "貢獻者"
       }
     };
 
@@ -142,7 +164,16 @@
     let simulationsData = [];
     let currentLang = 'en-US';
 
+    // --- Initialization ---
+    async function init() {
+      // 1. Load Language from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const langParam = urlParams.get('lang');
+      if (langParam && i18n[langParam]) {
+        currentLang = langParam;
+      }
 
+      updateLanguageUI();
 
       // 2. Fetch Data
       try {
@@ -179,7 +210,9 @@
 
       // Sort data into groups
       simulationsData.forEach(sim => {
-
+        // Get localized title/desc for filtering
+        const title = sim.title[currentLang] || sim.title['en-US'];
+        const desc = sim.description[currentLang] || sim.description['en-US'];
 
         // Filter
         if (filterText && !title.toLowerCase().includes(filterLower) && !desc.toLowerCase().includes(filterLower)) {
@@ -205,7 +238,7 @@
         section.className = "mb-16 fade-in-section";
 
         // Section Title
-        const catTitle = categories[category] || category;
+        const catTitle = i18n[currentLang].categories[category] || category;
         const h2 = document.createElement('h2');
         h2.className = "text-2xl font-bold mb-6 text-blue-300 border-b border-slate-800 pb-2 inline-block pr-8";
         h2.textContent = catTitle;
