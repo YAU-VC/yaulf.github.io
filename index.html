@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Simulations</title>
+  <title>Simulations</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -95,9 +95,11 @@
     <h1
       class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 tracking-tight"
       data-i18n="siteTitle">
-      Simuilations
+      Simulations
     </h1>
-
+    <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8 font-light" data-i18n="siteTagline">
+      Interactive simulations for exploring the IT world.
+    </p>
 
     <!-- Search Bar -->
     <div class="max-w-md mx-auto relative group">
@@ -123,10 +125,9 @@
   </main>
 
 
-
   <script>
     // --- Configuration ---
-    const DATA_URL = 'data/simulations.json';
+    const DATA_URL = 'data/simulation.json';
 
     // Category Order (as requested)
     const CATEGORY_ORDER = [
@@ -137,10 +138,9 @@
 
     // i18n Configuration
     const i18n = {
-    'en-US': {
+      'en-US': {
         siteTitle: "Simulation",
-
-
+        siteTagline: "Interactive simulations for exploring the IT world.",
         searchPlaceholder: "Search simulations...",
         categories: {
           "ICT": "ICT",
@@ -151,7 +151,7 @@
       },
       'zh-HK': {
         siteTitle: "模擬實驗室",
-
+        siteTagline: "互動模擬體驗。",
         searchPlaceholder: "搜尋模擬實驗...",
         categories: {
           "ICT": "資訊及通訊科技",
